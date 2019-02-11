@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "nyu-cssa-web-dev",
+    "staging": "nyu-cssa-web-dev"
+  }
+}
