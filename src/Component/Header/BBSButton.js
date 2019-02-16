@@ -3,11 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
-
-library.add(faLocationArrow);
 
 const BBSButton = withStyles({
   root: {
@@ -29,7 +24,3 @@ const BBSButton = withStyles({
 export default function ClassesShorthand() {
   return <BBSButton>BBS</BBSButton>;
 }
-/*
-problem: too close to the text, padding doesn't work
-<FontAwesomeIcon icon="location-arrow"/>
-*/

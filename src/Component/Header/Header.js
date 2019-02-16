@@ -10,7 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Logo from "../image/logo.png"
+import Logo from "./logo.png"
 import {Link} from "react-router-dom"
 import Divider from '@material-ui/core/Divider';
 import BBSButton from './BBSButton.js';
@@ -256,48 +256,3 @@ PrimarySearchAppBar.propTypes = {
 };
 
 export default withStyles(styles)(PrimarySearchAppBar);
-
-/*
-<div className="bbsButton">
-  <a href="http://cssanyu.org/bbs2/forum.php?mod=forumdisplay&fid=41" target="_blank" rel="noopener noreferrer">
-  <Button style={{color:""}} >
-    BBS
-  </Button>
-  </a>
-</div>
-*/
-
-/*
-<div className={classes.subpageButtons}>
-<Link to="/">
- <Button className="subpageButton" style={{margin: '10px'}}>
-   <p>HOME</p>
-  </Button>
-</Link>
-<Link to="/event">
- <Button className="subpageButton" style={{margin: '10px'}}>
-    Events
-  </Button>
-</Link>
-
-<Link to="/contact">
-  <Button className="subpageButton" style={{margin: '10px'}}>
-    Contact Us
-  </Button>
-</Link>
-</div>
-</div>
-*/
-
-/*
-<Link to="/">
- <SubpageButton content="HOME"></SubpageButton>
-</Link>
-<Link to="/event">
- <SubpageButton content="EVENTS"></SubpageButton>
-</Link>
-
-<Link to="/contact">
-  <SubpageButton content="CONTACT US"></SubpageButton>
-</Link>
-*/
