@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import {Link} from "react-router-dom"
 
 const SubpageButton = withStyles({
   root: {
@@ -17,6 +18,8 @@ const SubpageButton = withStyles({
   },
 })(Button);
 
-export default function ClassesShorthand(props) {
-  return <SubpageButton>{props.content}</SubpageButton>;
+export default function SubpageButtonItem(props) {
+  return <Link to={props.link}>
+            <SubpageButton>{props.content}</SubpageButton>
+        </Link>
 }

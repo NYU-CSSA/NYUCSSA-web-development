@@ -10,12 +10,17 @@ import Menu from '@material-ui/core/Menu';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Logo from "./logo.png"
+import Logo from "../image/logo.png"
 import {Link} from "react-router-dom"
 import Divider from '@material-ui/core/Divider';
 import BBSButton from './BBSButton.js';
 import SubpageButton from './SubpageButton.js';
+
+
+import MobileView from "./MobileView"
+
 import './index.css';
+import links from "./Links"
 
 const styles = theme => ({
   root: {
@@ -27,14 +32,14 @@ const styles = theme => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginLeft: 0,
+    marginLeft: '-20px',
     marginRight: 0,
   },
   title: {
     display: 'none',
     fontWeight: '600',
     fontSize: '20px',
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
       display: 'block',
     },
     marginLeft:'-10px',
@@ -116,6 +121,8 @@ const styles = theme => ({
   },
 });
 
+//TODO: extract all css style, make a desktop View Component
+
 class PrimarySearchAppBar extends React.Component {
   state = {
     anchorEl: null,
@@ -144,70 +151,13 @@ class PrimarySearchAppBar extends React.Component {
     const { classes } = this.props;
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-
-      <Link to="/">
-        <MenuItem onClick={this.handleMobileMenuClose}>
-
-
-             <Button style={{color:"#7109b5"}} >
-                Home
-              </Button>
-
-        </MenuItem>
-    </Link>
-
-        <Link to="/event">
-        <MenuItem onClick={this.handleMobileMenuClose}>
-
-             <Button style={{color:"#7109b5"}} >
-
-                Event
-
-              </Button>
-
-
-        </MenuItem>
-        </Link>
-
-        <Link to="/contact">
-
-
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-
-        <Button style={{color:"#7109b5"}} >
-                Contact Us
-              </Button>
-
-        </MenuItem>
-        </Link>
-
-        <a href="http://cssanyu.org/bbs2/forum.php?mod=forumdisplay&fid=41" target="_blank" rel="noopener noreferrer">
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-        <Button className="BSS" style={{color:"#7109b5"}} >
-                BBS
-              </Button>
-        </MenuItem>
-        </a>
-      </Menu>
-    );
-
     return (
       <div className={classes.root}>
         <AppBar position="static" style={{background:"white"}}>
           <Toolbar>
           <Link to="/">
             <IconButton className={classes.menuButton}  aria-label="Open drawer">
-
                 <img src={Logo} style={{height:"",width:"45px", marginLeft:"30px", marginRight:'10px'}} alt="logo"/>
-
             </IconButton>
             </Link>
                 <Typography className={classes.title} variant="h6" color="inherit" noWrap style={{color:"#7109b5"}} >
@@ -218,16 +168,15 @@ class PrimarySearchAppBar extends React.Component {
             <div className={classes.sectionDesktop}>
 
             <div className={classes.subpageButtons}>
-            <Link to="/">
-             <SubpageButton content="HOME"></SubpageButton>
-            </Link>
-            <Link to="/event">
-             <SubpageButton content="EVENTS"></SubpageButton>
-            </Link>
-
-            <Link to="/contact">
-              <SubpageButton content="CONTACT US"></SubpageButton>
-            </Link>
+              {
+                links.map((linkItem)=>{
+                  const {content,link} = linkItem
+                  return    <SubpageButton
+                              content={content}
+                              link= {link}
+                           />
+                })
+              }
             </div>
             </div>
 
@@ -245,7 +194,11 @@ class PrimarySearchAppBar extends React.Component {
           </Toolbar>
         </AppBar>
 
-        {renderMobileMenu}
+        <MobileView
+          mobileMoreAnchorEl={mobileMoreAnchorEl}
+          isMobileMenuOpen={isMobileMenuOpen}
+          handleMenuClose={this.handleMenuClose}
+        />
       </div>
     );
   }
@@ -256,3 +209,91 @@ PrimarySearchAppBar.propTypes = {
 };
 
 export default withStyles(styles)(PrimarySearchAppBar);
+
+/*
+<div className="bbsButton">
+  <a href="http://cssanyu.org/bbs2/forum.php?mod=forumdisplay&fid=41" target="_blank" rel="noopener noreferrer">
+  <Button style={{color:""}} >
+    BBS
+  </Button>
+  </a>
+</div>
+*/
+
+/*
+<div className={classes.subpageButtons}>
+<Link to="/">
+ <Button className="subpageButton" style={{margin: '10px'}}>
+   <p>HOME</p>
+  </Button>
+</Link>
+<Link to="/event">
+ <Button className="subpageButton" style={{margin: '10px'}}>
+    Events
+  </Button>
+</Link>
+
+<Link to="/contact">
+  <Button className="subpageButton" style={{margin: '10px'}}>
+    Contact Us
+  </Button>
+</Link>
+</div>
+</div>
+*/
+
+/*
+<Link to="/">
+ <SubpageButton content="HOME"></SubpageButton>
+</Link>
+<Link to="/event">
+ <SubpageButton content="EVENTS"></SubpageButton>
+</Link>
+
+<Link to="/contact">
+  <SubpageButton content="CONTACT US"></SubpageButton>
+</Link>
+*/
+
+/*
+<Link to="/">
+  <MenuItem onClick={this.handleMobileMenuClose}>
+       <Button style={{color:"#7109b5"}} >
+          Home
+        </Button>
+  </MenuItem>
+  </Link>
+
+  <Link to="/event">
+  <MenuItem onClick={this.handleMobileMenuClose}>
+
+       <Button style={{color:"#7109b5"}} >
+
+          Event
+
+        </Button>
+
+
+  </MenuItem>
+  </Link>
+
+  <Link to="/contact">
+
+
+  <MenuItem onClick={this.handleProfileMenuOpen}>
+
+  <Button style={{color:"#7109b5"}} >
+          Contact Us
+        </Button>
+
+  </MenuItem>
+  </Link>
+
+  <a href="http://cssanyu.org/bbs2/forum.php?mod=forumdisplay&fid=41" target="_blank" rel="noopener noreferrer">
+  <MenuItem onClick={this.handleProfileMenuOpen}>
+  <Button className="BSS" style={{color:"#7109b5"}} >
+          BBS
+        </Button>
+  </MenuItem>
+  </a>
+*/
