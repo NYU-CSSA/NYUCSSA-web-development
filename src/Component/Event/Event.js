@@ -66,7 +66,6 @@ class Event extends React.Component{
       };
       this.handleFilter = this.handleFilter.bind(this);
       this.computeDate = this.computeDate.bind(this);
-      this.compareDates = this.compareDates.bind(this);
     }
 
     handleFilter(event) {
@@ -91,22 +90,6 @@ class Event extends React.Component{
           }
         })
         this.setState({displayedEvents: array});
-    }
-
-    //return a positive number if date b > date a
-    compareDates(a, b) {
-      var date1 = a;
-      var date2 = b;
-      var i = 0;
-      var found = false;
-      while (i < date1.length && !found) {
-        if (date1.charAt(i) === date2.charAt(i)) {
-          i++;
-        } else {
-          found = true;
-        }
-      }
-      return date2.charAt(i) -date1.charAt(i);
     }
 
     render(){
