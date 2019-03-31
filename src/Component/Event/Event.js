@@ -3,10 +3,11 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Button from "@material-ui/core/Button"
-import db from "../../DataBase/FirebaseConfig"
-import Loader from "../Loading"
-import FilterDate from "./FilterDate.js"
+import Button from "@material-ui/core/Button";
+import db from "../../DataBase/FirebaseConfig";
+import Loader from "../Loading";
+import FilterDate from "./FilterDate.js";
+import Moment from 'react-moment';
 
 //it would be better to have font size 18 for body1
 
@@ -32,8 +33,8 @@ class Event extends React.Component{
     componentWillMount(){
         db.ref("Event").once("value").then((snapshot)=>{
           var HomeData = snapshot.val().data;
-          console.log(HomeData);
-          
+          //console.log(HomeData);
+
 
           HomeData.sort(function(a, b) {
             var date1 = a.date;
@@ -71,23 +72,17 @@ class Event extends React.Component{
     handleFilter(event) {
         const value = event.target.value;
         let array = [];
-        //console.log(event.target.value);
         this.setState({filterValue: event.target.value});
         this.state.events.map((element, index) => {
           if (value === 0) {
             array.push(element);
           } else if (value === 1) {
-            //formatting today's date and get the date six months before
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = today.getMonth().toString().length === 2 ? today.getMonth() : "0" + today.getMonth().toString();
-            const day = today.getDate().toString().length === 2 ? today.getDate() : "0" + today.getDate().toString();
-            const date = year + "-" + month + "-" + day;
-            //console.log(date);
-            const oldDate = this.computeDate(date);
-            if (this.compareDates(oldDate, element.date) > 0) {
+            const moment = require('moment');
+            const now = moment();
+            const oldDate = now.subtract(6, 'months');
+            const date = moment(element.date);
+            if (oldDate.isBefore(date)) {
               array.push(element);
-              //console.log(element.date);
             }
           } else {
             if (element.date.includes(value)) {
@@ -95,53 +90,7 @@ class Event extends React.Component{
             }
           }
         })
-        //console.log(array);
         this.setState({displayedEvents: array});
-        //console.log(this.state.displayedEvents);
-    }
-
-    computeDate(date) {
-      let year = parseInt(date.slice(0, 4));
-      let month = parseInt(date.slice(5, 7));
-      let day = parseInt(date.slice(8, 10));
-      const months = [
-        {month: 1, days: 31},
-        {month: 2, days: 28},
-        {month: 3, days: 31},
-        {month: 4, days: 30},
-        {month: 5, days: 31},
-        {month: 6, days: 30},
-        {month: 7, days: 31},
-        {month: 8, days: 31},
-        {month: 9, days: 30},
-        {month: 10, days: 31},
-        {month: 11, days: 30},
-        {month: 12, days: 31},
-      ];
-
-      let oldD = day;
-      let oldM = month - 6;
-      console.log(oldM);
-      let oldY = year - 1;
-      if (oldM < 0) {
-        oldM += 12;
-        year -= 1;
-      }
-      months.map(m => {
-        if (oldM === m.month) {
-          if (oldD > m.days) {
-            oldM += 1;
-            oldD -= m.days;
-          }
-        }
-      });
-      console.log(oldD.length)
-      oldD = oldD.length === 2 ? oldD : "0" + oldD;
-      oldM = oldM.length === 2 ? oldM : "0" + oldM;
-      console.log(oldD);
-      const oldDate = oldY + "-" + oldM + "-" + oldD;
-      console.log(oldDate);
-      return oldDate;
     }
 
     //return a positive number if date b > date a
@@ -157,8 +106,6 @@ class Event extends React.Component{
           found = true;
         }
       }
-      //console.log(date1 + " " + date2);
-      //console.log(date2.charAt(i) - date1.charAt(i));
       return date2.charAt(i) -date1.charAt(i);
     }
 
