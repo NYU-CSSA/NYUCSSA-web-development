@@ -116,13 +116,13 @@ class Event extends React.Component{
                                             {event.date}
                                         </Typography>
 
-                                        <Typography variant="body1" style={{fontSize:18}} PgutterBottom>
+                                        <Typography variant="body1" style={{fontSize:16}} PgutterBottom>
                                             {event.content}
                                         </Typography>
 
                                         <Typography component="h2" variant="h4" gutterBottom>
                                             <a target="_blank" href={event.buttonURL} style={{padding:0,color:"purple"}} rel="noopener noreferrer">
-                                                <Button variant="outlined" style={{padding:15,marginTop:15,color:"purple",fontSize:20}} >{event.buttonText}</Button>
+                                                <Button variant="outlined" style={{padding:10,marginTop:20,background:"#7109b5",color:"white",fontSize:15}} >{event.buttonText}</Button>
                                             </a>
                                         </Typography>
                                     </Paper>

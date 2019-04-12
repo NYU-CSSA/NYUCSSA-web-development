@@ -27,7 +27,7 @@ const BBSButton = withStyles({
 })(Button);
 
 export default function ClassesShorthand() {
-  return <BBSButton>BBS</BBSButton>;
+  return <BBSButton>Forum</BBSButton>;
 }
 /*
 problem: too close to the text, padding doesn't work

@@ -32,8 +32,11 @@ const styles = {
     fontSize:15
   },
   button:{
+    background:"#7109b5",
+    color:"white",
+    fontSize:15,
     padding:10,
-    color:"#7109b5"
+    background:"#7109b5"
   },
   pos: {
     marginBottom: 12,
