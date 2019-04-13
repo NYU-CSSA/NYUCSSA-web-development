@@ -8,9 +8,9 @@ const BBSButton = withStyles({
   root: {
     width: '120%',
     height: '200%',
-    fontSize: '15px',
+    fontSize: '14px',
     padding: '5px 15px',
-    background: '#7109b5',
+    background: 'rgb(113,9,181)',
   },
   label: {
     color: 'white',

@@ -31,6 +31,9 @@ const styles = {
     paddingTop:20,
     fontSize:15
   },
+  buttonContainer: {
+    margin: "0 auto",
+  },
   button:{
     background:"#7109b5",
     color:"white",
@@ -62,7 +65,7 @@ class IndexCard extends React.Component{
             </CardContent>
 
             <CardActions>
-              <Link to={`${buttonURL}`}>
+              <Link to={`${buttonURL}`} className={classes.buttonContainer}>
                   <Button size="large" variant="outlined"  className={classes.button}>了解更多活动</Button>
               </Link>
             </CardActions>

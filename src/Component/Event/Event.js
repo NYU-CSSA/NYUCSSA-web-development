@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
 import db from "../../DataBase/FirebaseConfig";
 import Loader from "../Loading";
-import FilterDate from "./FilterDate.js";
+import Filter from './Filter.js'
 import Moment from 'react-moment';
 
 //it would be better to have font size 18 for body1
@@ -64,12 +64,18 @@ class Event extends React.Component{
         loading:true,
         filterValue: 0,
       };
-      this.handleFilter = this.handleFilter.bind(this);
+      //this.handleFilter = this.handleFilter.bind(this);
+      this.computeDate = this.computeDate.bind(this);
+      this.compareDates = this.compareDates.bind(this);
+      this.filterDate = this.filterDate.bind(this);
+      this.filterWord = this.filterWord.bind(this);
     }
 
+    /*
     handleFilter(event) {
         const value = event.target.value;
         let array = [];
+        //console.log(event.target.value);
         this.setState({filterValue: event.target.value});
         this.state.events.map((element, index) => {
           if (value === 0) {
@@ -81,6 +87,7 @@ class Event extends React.Component{
             const date = moment(element.date);
             if (oldDate.isBefore(date)) {
               array.push(element);
+              console.log(oldDate.isBefore(date));
             }
           } else {
             if (element.date.includes(value)) {
@@ -88,7 +95,71 @@ class Event extends React.Component{
             }
           }
         })
+        //console.log(array);
         this.setState({displayedEvents: array});
+        //console.log(this.state.displayedEvents);
+    }
+    */
+
+    filterDate(value){
+      let array = [];
+      //console.log(event.target.value);
+      //this.setState({filterValue: value});
+      this.state.events.map((element, index) => {
+        if (value === 0) {
+          array.push(element);
+        } else if (value === 1) {
+          const moment = require('moment');
+          const now = moment();
+          const oldDate = now.subtract(6, 'months');
+          const date = moment(element.date);
+          if (oldDate.isBefore(date)) {
+            array.push(element);
+            console.log(oldDate.isBefore(date));
+          }
+        } else {
+          if (element.date.includes(value)) {
+            array.push(element);
+          }
+        }
+      })
+      //console.log(array);
+      this.setState({displayedEvents: array});
+    }
+
+    filterWord(word) {
+      let array = [];
+      this.state.events.map((element, index) => {
+        const string = new RegExp(word, "i");
+        if (element.content.search(string) !== -1 || element.date.search(string) !== -1
+        || element.title.search(string) !== -1) {
+          array.push(element);
+        }
+      });
+      this.setState({displayedEvents: array});
+    }
+
+    computeDate(date) {
+      let moment = require('moment');
+      let now = moment();
+      let oldDate = now.subtract(6, 'months');
+      return oldDate;
+    }
+
+    //return a positive number if date b > date a
+    compareDates(a, b) {
+      var date1 = a;
+      var date2 = b;
+      var i = 0;
+      var found = false;
+      while (i < date1.length && !found) {
+        if (date1.charAt(i) === date2.charAt(i)) {
+          i++;
+        } else {
+          found = true;
+        }
+      }
+      return date2.charAt(i) -date1.charAt(i);
     }
 
     render(){
@@ -98,10 +169,9 @@ class Event extends React.Component{
             const { classes } = this.props;
             return (
                 <div className={classes.root}>
-                  <FilterDate
-                    events = {this.state.events}
-                    handleFilter = {this.handleFilter}
-                  />
+                  <Filter
+                    filterDate={this.filterDate}
+                    filterWord={this.filterWord}/>
                     {this.state.displayedEvents.map((event,index)=>{
                        //TODO CONDITION LOGIC
                         return <Grid container spacing={0} key={index}>
@@ -142,5 +212,13 @@ class Event extends React.Component{
     }
 }
 
-
 export default withStyles(styles)(Event);
+
+/*
+<FilterDate
+  events = {this.state.events}
+  handleFilter = {this.handleFilter}
+/>
+*/
+//<StyledButton name={event.buttonText}></StyledButton>
+//<Button variant="outlined" style={{padding:15,marginTop:15,color:"purple",fontSize:20}} >{event.buttonText}</Button>
