@@ -65,7 +65,6 @@ class Event extends React.Component{
         filterValue: 0,
       };
       this.handleFilter = this.handleFilter.bind(this);
-      this.computeDate = this.computeDate.bind(this);
     }
 
     handleFilter(event) {
